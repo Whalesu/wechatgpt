@@ -5,6 +5,7 @@ import (
 	"github.com/spf13/viper"
 	"os"
 	"strings"
+	"strconv"
 )
 
 var config *Config
@@ -14,12 +15,14 @@ type Config struct {
 }
 
 type ChatGptConfig struct {
-	Token         string  `json:"token,omitempty" json:"token,omitempty"`
+	Token         string  `json:"token,omitempty"`
 	Wechat        *string `json:"wechat,omitempty"`
-	WechatKeyword *string `json:"wechat_keyword"`
+	WechatKeyword *string `json:"wechatkeyword"`
+	Model        *string `json:"model,omitempty"`
+	MaxLen        *int `json:"maxlen,omitempty"`
 	Telegram      *string `json:"telegram"`
-	TgWhitelist   *string `json:"tg_whitelist"`
-	TgKeyword     *string `json:"tg_keyword"`
+	TgWhitelist   *string `json:"tgWhitelist"`
+	TgKeyword     *string `json:"tgKeyword"`
 }
 
 func LoadConfig() error {
@@ -53,7 +56,7 @@ func GetWechat() *string {
 }
 
 func GetWechatKeyword() *string {
-	keyword := getEnv("wechat_keyword")
+	keyword := getEnv("wechatkeyword")
 
 	if keyword != nil {
 		return keyword
@@ -65,6 +68,37 @@ func GetWechatKeyword() *string {
 		keyword = config.ChatGpt.WechatKeyword
 	}
 	return keyword
+}
+
+func GetModelType() *string {
+	keyword := getEnv("Model")
+
+	if keyword != nil {
+		return keyword
+	}
+	if config == nil {
+		return nil
+	}
+	if keyword == nil {
+		keyword = config.ChatGpt.Model
+	}
+	return keyword
+}
+
+func GetMaxLen() *int {
+	keyword := getEnv("MaxLen")
+
+	if keyword != nil {
+		maxlen, _ := strconv.Atoi(*keyword)
+		return &maxlen
+	}
+	if config == nil {
+		return nil
+	}
+	if keyword == nil {
+		return config.ChatGpt.MaxLen
+	}
+	return nil
 }
 
 func GetTelegram() *string {
