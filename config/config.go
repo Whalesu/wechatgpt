@@ -71,7 +71,7 @@ func GetWechatKeyword() *string {
 }
 
 func GetModelType() *string {
-	keyword := getEnv("Model")
+	keyword := getEnv("model")
 
 	if keyword != nil {
 		return keyword
@@ -86,7 +86,7 @@ func GetModelType() *string {
 }
 
 func GetMaxLen() *int {
-	keyword := getEnv("MaxLen")
+	keyword := getEnv("maxlen")
 
 	if keyword != nil {
 		maxlen, _ := strconv.Atoi(*keyword)
@@ -147,7 +147,7 @@ func GetTelegramWhitelist() *string {
 }
 
 func GetOpenAiApiKey() *string {
-	apiKey := getEnv("api_key")
+	apiKey := getEnv("token")
 
 	if apiKey != nil {
 		return apiKey
