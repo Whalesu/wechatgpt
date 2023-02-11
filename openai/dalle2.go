@@ -14,7 +14,7 @@ import (
 )
 
 // ChatGPTResponseBody 请求体
-type ChatGPTResponseBody struct {
+type DalleResponseBody struct {
 	ID      string                   `json:"id"`
 	Object  string                   `json:"object"`
 	Created int                      `json:"created"`
@@ -24,7 +24,7 @@ type ChatGPTResponseBody struct {
 }
 
 // ChatGPTRequestBody 响应体
-type ChatGPTRequestBody struct {
+type DalleRequestBody struct {
 	Model            string  `json:"model"`
 	Prompt           string  `json:"prompt"`
 	MaxTokens        int     `json:"max_tokens"`
@@ -55,7 +55,7 @@ type ChatGPTRequestBody struct {
 //	});
 //
 // Completions sendMsg
-func Completions(msg string, model_opt string) (*string, error) {
+func DalleCompletions(msg string, model_opt string) (*string, error) {
 	model := "text-davinci-003"
 	if model_opt!= "" {
 		model = model_opt
