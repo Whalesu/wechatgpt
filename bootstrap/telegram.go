@@ -11,13 +11,22 @@ import (
 	"time"
 )
 
+const (
+	// APIEndpoint is the endpoint for all API methods,
+	// with formatting for Sprintf.
+	APIEndpoint = "https://www.serioussirius.xyz/dispatch/tg/bot%s/%s"
+	// FileEndpoint is the endpoint for downloading a file from Telegram.from Telegram.
+	FileEndpoint = "https://www.serioussirius.xyz/dispatch/tg/file/bot%s/%s"
+)
+
 func StartTelegramBot() {
 	telegramKey := config.GetTelegram()
 	if telegramKey == nil {
 		log.Info("未找到tg token,不启动tg tot")
 		return
 	}
-	bot, err := tgbotapi.NewBotAPI(*telegramKey)
+	
+	bot, err := tgbotapi.NewBotAPIWithAPIEndpoint(*telegramKey, APIEndpoint)
 	if err != nil {
 		log.Error("tg bot 启动失败：", err.Error())
 		return
@@ -28,7 +37,7 @@ func StartTelegramBot() {
 	u := tgbotapi.NewUpdate(0)
 
 	updates := bot.GetUpdatesChan(u)
-	time.Sleep(time.Millisecond * 500)
+	time.Sleep(time.Millisecond * 1000)
 	for len(updates) != 0 {
 		<-updates
 	}
@@ -74,13 +83,13 @@ func StartTelegramBot() {
 			if len(splitItems) < 2 {
 				continue
 			}
-			content, key = utils.ContainsI(text, "codingMode")
+			requestText := strings.TrimSpace(splitItems[1])
+			content, key = utils.ContainsI(requestText, "codingMode")
 			if len(key) != 0 {
 				splitItems := strings.Split(content, key)
-				text = strings.TrimSpace(splitItems[1])
+				requestText = strings.TrimSpace(splitItems[1])
 				model = "code-davinci-002"
 			}
-			requestText := strings.TrimSpace(splitItems[1])
 			log.Println("问题：", requestText)
 			reply = telegram.Handle(requestText, model)
 		} else {
