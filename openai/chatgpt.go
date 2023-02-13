@@ -112,7 +112,7 @@ func Completions(msg string, model_opt string) (*string, error) {
 	}
 
 	gptResponseBody := &ChatGPTResponseBody{}
-	gptErrorBody := &ChatGPTErrorBodyP{}
+	gptErrorBody := &ChatGPTErrorBody{}
 	log.Println(string(body))
 	err = json.Unmarshal(body, gptResponseBody)
 	if err != nil {
