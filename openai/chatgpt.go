@@ -112,15 +112,11 @@ func Completions(msg string, model_opt string) (*string, error) {
 	}
 
 	gptResponseBody := &ChatGPTResponseBody{}
-	gptErrorBody := &ChatGPTErrorBody{}
 	log.Println(string(body))
 	err = json.Unmarshal(body, gptResponseBody)
 	if err != nil {
-		err = json.Unmarshal(body, gptErrorBody)
-		if err != nil {
-			log.Println(err)
-			return nil, err
-		}
+		log.Println(err)
+		return nil, err
 	}
 	var reply string
 	if len(gptResponseBody.Choices) > 0 {
@@ -128,9 +124,19 @@ func Completions(msg string, model_opt string) (*string, error) {
 			reply = v["text"].(string)
 			break
 		}
-	} else {
+	} 
+	
+	gptErrorBody := &ChatGPTErrorBody{}
+	err = json.Unmarshal(body, gptErrorBody)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+
+	if (len(reply) == 0) {
 		reply = gptErrorBody.Error["message"].(string)
 	}
+
 	log.Printf("gpt response full text: %s \n", reply)
 	result := strings.TrimSpace(reply)
 	return &result, nil
