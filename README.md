@@ -3,7 +3,7 @@
 如果觉得不错，请麻烦点个`Star`，非常感谢。（最新己经添加了docker部署的方式）
 
 <p>
-<img alt="Version" src="https://img.shields.io/badge/version-2.9.3-blue.svg?cacheSeconds=86400" />
+<img alt="Version" src="https://img.shields.io/badge/version-2.9.7-blue.svg?cacheSeconds=86400" />
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-green.svg" />
   </a>
@@ -27,7 +27,7 @@ cp config/config.yaml.example local/config.yaml
 
 打开 [openai](https://beta.openai.com/account/api-keys) 并注册一个账号,
 生成一个api_key并把api_key放到`local/config.yaml`
-的token下，请看如下示例：
+的token下，请看如下示例(说了是示例别试了,内容乱写的，也感谢@那些担心泄漏key的)：
 
 ```
 chatgpt:
@@ -160,12 +160,6 @@ INFO[0099] 3 <Friend:wloscar>
 
 ### 使用场景2
 
-别人在群里发消息时，如果消息中带有关键字，系统就会调用AI自动帮你回复此问题。
-
-<img src="screenshots/IMG_3845.png" alt="drawing" style="width:250px;"/><img src="screenshots/IMG_3847.png" alt="drawing" style="width:250px;"/>
-
-### 使用场景3
-
 自己给自己发消息时，如果消息中带有关键字，系统会也调用AI自动帮你回复此问题。
 
 <img src="screenshots/IMG_3844.png" alt="drawing" style="width:250px;"/>
@@ -176,20 +170,14 @@ INFO[0099] 3 <Friend:wloscar>
 
 这不比对象来的贴心？
 
-### telegram机器人使用方式
-
-- 方式1: 直接添加小莫的bot进行使用     
-  <img src="screenshots/telegram.png" alt="drawing" style="width:250px;"/>
-
-
-- 方式2：自己部署   
+### telegram机器人使用方式  
   修改 config下的 `chatgpt.telegram`的token后运行`go run main.go`进行启动，参考如下：
 
 ```
 chatgpt:
   wechat: 小莫
-  token: sk-pKHZD1fLYqXDjjsdsdsdUvIODTT3ssjdfadsJC2gTuqqhTum
-  telegram: 5718911250:AAhR1pn52xcCFoM_GyI2g9BaX18S7WbYviQ 
+  token: sk-pKHZD1fLYyd56sadsdUvIODTT3ssjdfadsJC2gTuqqhTum
+  telegram: 5718911250:AAhRdbdfxzcCFoM_GyI2g9B18S7WbYviQ 
 ```
 
 `token`获取方式，请在telegram中添加好友`@botFather`并按提示操作

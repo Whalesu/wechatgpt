@@ -1,11 +1,10 @@
-FROM golang:1.19-alpine
+FROM golang:1.19-alpine as builder
 
-ENV api_key=""
-
-ARG target=/app
+ARG target=/root/build
 ARG entrypoint=docker/docker-entrypoint.sh
 
-RUN export GOPRIVATE=github.com/WhaleSu/wechatgpt
+RUN apk --no-cache add git && export GOPRIVATE=github.com/WhaleSu/wechatgpt && \
+    export GOPROXY=https://goproxy.cn,direct
 
 WORKDIR ${target}
 
@@ -18,6 +17,14 @@ COPY utils/ ${target}/utils
 COPY go.mod go.sum main.go ${target}/
 
 RUN go env -w GOPROXY=https://goproxy.cn,direct && go env -w GO111MODULE=on && go mod download && go build -o server main.go
+
+FROM alpine:latest as prod
+
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /root/
+
+COPY --from=0 /root/build/server .
 
 CMD ./server
 
