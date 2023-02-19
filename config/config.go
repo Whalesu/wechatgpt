@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"os"
 	"strings"
 	"github.com/spf13/viper"
@@ -103,7 +102,6 @@ func GetMaxLen() *int {
 
 func GetTelegram() *string {
 	tg := getEnv("telegram")
-	fmt.Println(tg)
 	if tg != nil {
 		return tg
 	}

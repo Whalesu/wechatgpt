@@ -21,7 +21,7 @@ RUN go env -w GOPROXY=https://goproxy.cn,direct && go env -w GO111MODULE=on && g
 
 CMD ./server
 
-COPY ${entrypoint} /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+# COPY ${entrypoint} /usr/local/bin/
+# RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT [ "docker-entrypoint.sh" ]
+# ENTRYPOINT [ "docker-entrypoint.sh" ]
