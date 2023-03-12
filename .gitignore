@@ -3,3 +3,6 @@ local/config.yaml
 token.json
 .vscode
 docker/docker-compose.yml
+wechatbot
+wechatbot.exe
+run.log
